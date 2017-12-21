@@ -16,4 +16,11 @@ urlpatterns = patterns(
     (r'^$', 'home'),
     (r'^dev-guide/$', 'dev_guide'),
     (r'^contactus/$', 'contactus'),
+    (r'^get_task_by_app/(?P<app_id>\w+)/$', 'get_task_by_app'),
+    (r'^get_host_by_app/(?P<app_id>\w+)/$', 'get_host_by_app'),
+    (r'^execute_task/$', 'execute_task'),
+    (r'^history/$', 'result_page'),
+    (r'^filter_history/$', 'filter_history'),
+    (r'^get_task_log/(?P<job_id>\w+)/$', 'get_task_log'),
+
 )

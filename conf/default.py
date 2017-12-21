@@ -33,7 +33,7 @@ from django.conf.global_settings import *  # noqa
 APP_ID = 'sicong'
 APP_TOKEN = '1ca954d4-6d0f-40db-9446-3e69e99bb6bf'
 # 蓝鲸智云开发者中心的域名，形如：http://paas.bking.com
-BK_PAAS_HOST = 'http://paasce-z.o.qcloud.com/'
+BK_PAAS_HOST = 'http://paasce-z.o.qcloud.com'
 
 # 是否启用celery任务
 IS_USE_CELERY = True
@@ -183,12 +183,13 @@ SESSION_COOKIE_PATH = SITE_URL               # NOTE 不要改动，否则，可�
 # ===============================================================================
 # Authentication
 # ===============================================================================
+
 AUTH_USER_MODEL = 'account.BkUser'
 AUTHENTICATION_BACKENDS = ('account.backends.BkBackend', 'django.contrib.auth.backends.ModelBackend')
 LOGIN_URL = "%s/login/?app_id=%s" % (BK_PAAS_HOST, APP_ID)
 LOGOUT_URL = '%saccount/logout/' % SITE_URL
 LOGIN_REDIRECT_URL = SITE_URL
-REDIRECT_FIELD_NAME = "c_url"
+REDIRECT_FIELD_NAME = 'c_url'
 # 验证登录的cookie名
 BK_COOKIE_NAME = 'bk_token'
 # 数据库初始化 管理员列表
@@ -227,6 +228,7 @@ if IS_USE_CELERY:
 BK_LOG_DIR = os.environ.get('BK_LOG_DIR', '/data/paas/apps/logs/')
 LOGGING_DIR = os.path.join(BASE_DIR, 'logs', APP_ID)
 LOG_CLASS = 'logging.handlers.RotatingFileHandler'
+
 if RUN_MODE == 'DEVELOP':
     LOG_LEVEL = 'DEBUG'
 elif RUN_MODE == 'TEST':
