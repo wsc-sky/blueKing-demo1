@@ -2,6 +2,7 @@
 
 <%block name="content">
 
+    <img src="https://magicbox.bk.tencent.com/static_api/v3/components/loading3/svg/oval.svg" width="50" alt="" id="loading3_demo1">
 
   <div class="container">
     <br/>
@@ -94,7 +95,7 @@
     var host_html = ''
     var task_html = ''
     $.ajax({
-      url: '/get_host_by_app/' + app_id + '/',
+      url: site_url+'get_host_by_app/' + app_id + '/',
       type: 'GET',
       success: function (data) {
         const hosts = data.host_list
@@ -115,7 +116,7 @@
 
 
     $.ajax({
-      url: '/get_task_by_app/' + app_id + '/',
+      url: site_url+'get_task_by_app/' + app_id + '/',
       type: 'GET',
       success: function (data) {
         const tasks = data.task_list
@@ -138,7 +139,7 @@
     var app_id = app_data[0]
     var app_name = app_data[1]
     $.ajax({
-      url: '/execute_task/',
+      url: site_url+'execute_task/',
       type: 'POST',
       data: {'ip': ip, 'task_id': task_id, 'task_name': task_name, 'app_id': app_id, 'app_name': app_name},
       success: function (data) {
