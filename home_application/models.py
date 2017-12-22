@@ -58,3 +58,11 @@ class Log(models.Model):
 
     def __unicode__(self):
         return u'{}'.format(self.content[0:50]) or ''
+
+
+class CeleryLog(models.Model):
+    created_date = models.DateTimeField(default=timezone.now)
+    ip = models.CharField(max_length=40)
+    app_id = models.CharField(max_length=10)
+    task_id = models.CharField(max_length=10)
+    log = models.CharField(max_length=2000)

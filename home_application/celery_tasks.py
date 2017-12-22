@@ -14,12 +14,14 @@ celery 任务示例
 周期性任务还需要启动celery调度命令：python  manage.py  celerybeat --settings=settings
 """
 import datetime
-
+import time
 from celery import task
 from celery.schedules import crontab
 from celery.task import periodic_task
 
 from common.log import logger
+from models import CeleryLog
+from blueking.component.shortcuts import get_client_by_request, get_client_by_user
 
 
 @task()
@@ -56,6 +58,69 @@ def get_time():
     run_every=crontab(minute='*/5', hour='*', day_of_week="*")：每 5 分钟执行一次任务
     periodic_task：程序运行时自动触发周期任务
     """
-    execute_task()
+    # execute_task()
     now = datetime.datetime.now()
-    logger.error(u"celery 周期任务调用成功，当前时间：{}".format(now))
+    print now
+
+def cpu_statistics():
+    try:
+        app_id = '3'
+        task_id = '2'
+
+        data = {'app_id': app_id, 'task_id': task_id}
+
+        client = get_client_by_user('admin')
+
+        stepId=0
+        for step in client.job.get_task_detail(data)['data']['nmStepBeanList']:
+            stepId=step['stepId']
+
+        steps = [
+            {
+            'ipList': '1:10.0.1.109,1:10.0.1.220,1:10.0.1.188',
+            'stepId': stepId,
+            "account": "root",
+            },
+        ]
+        data = {'app_id':app_id, 'task_id': task_id, 'steps': steps}
+
+        execute_result = client.job.execute_task(data)
+        task_instance_id = execute_result['data']['taskInstanceId']
+
+        if execute_result['result']:
+
+            is_finished = client.job.get_task_result({'task_instance_id':task_instance_id})['data']['isFinished']
+            while not is_finished:
+                time.sleep(0.1)
+                is_finished = client.job.get_task_result({'task_instance_id': task_instance_id})['data']['isFinished']
+
+        log_contents =  client.job.get_task_ip_log({'task_instance_id': task_instance_id})['data'][0]['stepAnalyseResult'][0]['ipLogContent']
+
+        for log_content in log_contents:
+            ip = log_content['ip']
+            log = log_content['logContent'].split('all')[1].split('\n')[0]
+
+            celery_log  = CeleryLog.objects.create(
+                ip = ip,
+                app_id = app_id,
+                task_id = task_id,
+                log = log,
+            )
+    except:
+        return False
+
+    return True
+
+
+
+@periodic_task(run_every=crontab(minute='*/5', hour='*', day_of_week="*"))
+def get_cpu_info():
+    result = cpu_statistics()
+
+    if result:
+        print 'get cpu statistics successfully'
+    else:
+        print 'get cpu statistics failed'
+
+    now = datetime.datetime.now()
+    print now

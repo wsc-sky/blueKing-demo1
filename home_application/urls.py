@@ -13,14 +13,25 @@ from django.conf.urls import patterns
 
 urlpatterns = patterns(
     'home_application.views',
+
+    ##### page ####
     (r'^$', 'home'),
     (r'^dev-guide/$', 'dev_guide'),
     (r'^contactus/$', 'contactus'),
+    (r'^history/$', 'result_page'),
+    (r'^cpu_chart/$', 'cpu_statistics_page'),
+
+    ##### API method ######
     (r'^get_task_by_app/(?P<app_id>\w+)/$', 'get_task_by_app'),
     (r'^get_host_by_app/(?P<app_id>\w+)/$', 'get_host_by_app'),
+    (r'^get_app_by_user/$', 'get_app_by_user'),
     (r'^execute_task/$', 'execute_task'),
-    (r'^history/$', 'result_page'),
     (r'^filter_history/$', 'filter_history'),
     (r'^get_task_log/(?P<job_id>\w+)/$', 'get_task_log'),
+    (r'^get_cpu_statistics/$', 'get_cpu_statistics'),
+
+    ####  method test #####
+
+    (r'^test/$', 'test'),
 
 )

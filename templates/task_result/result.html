@@ -9,9 +9,19 @@
       <h3 class="king-block-title">填写个人信息</h3>
     </div>
     <div class="king-block-content">
+
+      选择用户
+
+      <select id="select_user" name="select_user" class="select2_box"  style="width: 200px">
+        <option value="all" class="selected_task" selected="true">所有</option>
+        %for user in user_list:
+        <option value=${user['username']} class="selected_job">${user['username']}</option>
+        %endfor
+      </select>
+
       选择业务
 
-      <select id="business_select" name="select_job" class="select2_box" onchange="select_job()">
+      <select id="business_select" name="select_job" class="select2_box"  style="width: 200px">
         <option value="all" class="selected_job" selected="true">所有</option>
 
         %for app in app_list:
@@ -19,18 +29,10 @@
         %endfor
       </select>
 
-      选择用户
 
-      <select id="select_user" name="select_user" class="select2_box" onchange="select_job()">
-        <option value="all" class="selected_task" selected="true">所有</option>
-        %for user in user_list:
-        <option value=${user['username']} class="selected_job">${user['username']}</option>
-        %endfor
-      </select>
       任务类型
 
-
-      <select name="select_task" id="select_task" class="select2_box">
+      <select name="select_task" id="select_task" class="select2_box" style="width: 200px">
         <option value="all" class="selected_task" selected="true">所有</option>
         %for task in task_list:
         <option value=${task['id']} class="selected_task">${task['name']}</option>
@@ -60,7 +62,7 @@
         </thead>
         <tbody id="tr_data">
         % for history in history_list:
-        <tr >
+        <tr>
 
           <th>${history['app_name']}</th>
           <th>${history['task_name']}</th>
@@ -68,7 +70,7 @@
           <th>${history['created_date']}</th>
           <th>${history['totalTime']}</th>
           <th>${history['ip']}</th>
-          <th >
+          <th>
             <button class="btn btn-primary" id="check_log"
                     onclick="check_log('${history['job_id']}')">
               查看执行Log
@@ -84,7 +86,18 @@
   </div>
 </div>
 
+
+</div>
+
+</%block>
+
 <script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#business_select').select2()
+        $('#select_task').select2()
+        $('#select_user').select2()
+    })
 
     function check_log(job_id) {
 
@@ -92,6 +105,7 @@
             url: '/get_task_log/' + job_id.toString() + '/',
             type: 'GET',
             success: function (data) {
+                $('.container').css({})
                 var d = dialog({
                     width: 800,
                     title: "执行Log",
@@ -104,57 +118,61 @@
 
     }
 
-    function filter_history(){
+    function filter_history() {
         var user = $("#select_user").val()
         var app_id = $("#business_select").val()
         var task_id = $("#select_task").val()
         $.ajax({
             url: '/filter_history/',
-            type:'GET',
-            data:{'user':user, 'app_id':app_id, 'task_id':task_id},
+            type: 'GET',
+            data: {'user': user, 'app_id': app_id, 'task_id': task_id},
             success: function (data) {
-              var history = data.history_list
+                var history = data.history_list
                 history_html = ''
-                for (var i =0 ; i< history.length;i++){
+                for (var i = 0; i < history.length; i++) {
                     var html =
                         "<tr>" +
-                        "<th>"+history[i].app_name+"</th>" +
-                        "<th>"+history[i].task_name+"</th>" +
-                        "<th>"+history[i].user+"</th>" +
-                        "<th>"+history[i].created_date+"</th>" +
-                        "<th>"+history[i].totalTime+"</th>" +
-                        "<th>"+history[i].ip+"</th>" +
+                        "<th>" + history[i].app_name + "</th>" +
+                        "<th>" + history[i].task_name + "</th>" +
+                        "<th>" + history[i].user + "</th>" +
+                        "<th>" + history[i].created_date + "</th>" +
+                        "<th>" + history[i].totalTime + "</th>" +
+                        "<th>" + history[i].ip + "</th>" +
                         "<th ><button class=\"btn btn-primary\" id=\"check_log\"" +
-                        "     onclick=\"check_log('"+history[i].job_id+"')\">" +
+                        "     onclick=\"check_log('" + history[i].job_id + "')\">" +
                         "     查看执行Log" +
                         "     </button>" +
                         "</th>"
-                    history_html+=html
+                    history_html += html
 
                 }
-                $("#tr_data").html(history_html)            }
-
-        })
-
-    }
-
-    function select_job() {
-        var selected_business = $("#business_select").val();
-        $.ajax({
-            url: '/get_host_by_app/' + selected_business + '/',
-            type: 'GET',
-            success: function (data) {
+                $("#tr_data").html(history_html)
             }
+
         })
 
-
     }
+{#    function select_user() {#}
+{#        var selected_business = $("#business_select").val();#}
+{#        $.ajax({#}
+{#            url: '/get_host_by_app/' + selected_business + '/',#}
+{#            type: 'GET',#}
+{#            success: function (data) {#}
+{#            }#}
+{#        })#}
+{##}
+{#    function select_job() {#}
+{#        var selected_business = $("#business_select").val();#}
+{#        $.ajax({#}
+{#            url: '/get_host_by_app/' + selected_business + '/',#}
+{#            type: 'GET',#}
+{#            success: function (data) {#}
+{#            }#}
+{#        })#}
+{##}
+{##}
+{#    }#}
 
 
 </script>
-
-
-</div>
-
-</%block>
 

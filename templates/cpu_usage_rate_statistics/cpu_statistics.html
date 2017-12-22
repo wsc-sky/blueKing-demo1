@@ -1,0 +1,99 @@
+<%inherit file="/base.html"/>
+
+<%block name="content">
+  <div class="container">
+
+<h4>10.0.1.109</h4>
+<div id="chart1_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+<h4>10.0.1.220</h4>
+<div id="chart2_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+<h4>10.0.1.188</h4>
+<div id="chart3_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+  </div>
+</%block>
+
+<script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
+<script src="https://magicbox.bkclouds.cc/static_api/v3/assets/echarts-2.0/echarts-all.js"></script>
+
+
+<script type="text/javascript">
+
+    function createEStandLineChart(conf){
+        var myChart = echarts.init(document.getElementById(conf.selector));
+        var legendData = []
+        for(var i=0; i < conf.data.series.length;i++){
+            legendData.push(conf.data.series[i].name)
+        }
+        myChart.setOption({
+            title :{
+                text: "CPU 使用率统计图"
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                y: 'bottom',
+                data:legendData
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['bar','line']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : conf.data.xAxis
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    splitArea : {show : true}
+                }
+            ],
+            series : conf.data.series
+        });
+     }
+    function initEStandLineChart(conf){
+        $.ajax({
+            url: conf.url,
+            type: 'GET',
+            dataType: conf.dataType,
+            success: function(res){
+                //获取数据成功
+                if (res.result){
+                    createEStandLineChart({
+                        selector: conf.containerId, // 图表容器
+                        data: res.data, // 图表数据
+                    });
+                }
+            }
+        })
+    }
+    $(function(){
+        initEStandLineChart({
+            url: '/get_cpu_statistics/?ip=10.0.1.109',
+            dataType: 'json',
+            containerId: 'chart1_demo'
+        });
+        console.log(111)
+        initEStandLineChart({
+            url: '/get_cpu_statistics/?ip=10.0.1.220',
+            dataType: 'json',
+            containerId: 'chart2_demo'
+        });
+
+        initEStandLineChart({
+            url: '/get_cpu_statistics/?ip=10.0.1.188',
+            dataType: 'json',
+            containerId: 'chart3_demo'
+        });
+    });
+</script>
