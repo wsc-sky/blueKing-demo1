@@ -174,7 +174,7 @@ def cpu_statistics_page(request):
 
 def get_cpu_statistics(request):
     ip = request.GET['ip']
-    celery_history = CeleryLog.objects.filter(ip=ip).order_by('created_date')[0:10][::-1]
+    celery_history = CeleryLog.objects.filter(ip=ip).order_by('-created_date')[0:10][::-1]
 
     data = {}
 
