@@ -21,12 +21,14 @@
     function createEStandLineChart(conf){
         var myChart = echarts.init(document.getElementById(conf.selector));
         var legendData = []
+        var myDate = new Date();
+
         for(var i=0; i < conf.data.series.length;i++){
             legendData.push(conf.data.series[i].name)
         }
         myChart.setOption({
             title :{
-                text: "CPU 使用率统计图"
+                text: myDate.toLocaleDateString()+ " CPU 使用率统计图"
             },
             tooltip : {
                 trigger: 'axis'

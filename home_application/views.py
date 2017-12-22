@@ -174,7 +174,7 @@ def cpu_statistics_page(request):
 
 def get_cpu_statistics(request):
     ip = request.GET['ip']
-    celery_history = CeleryLog.objects.filter(ip=ip).order_by('created_date')[0:10]
+    celery_history = CeleryLog.objects.filter(ip=ip).order_by('created_date')[0:10][::-1]
 
     data = {}
 
@@ -188,11 +188,11 @@ def get_cpu_statistics(request):
 
     user_usage_json = {'name': '用户使用率', 'type': 'line', 'data':[]}
     sys_usage_json = {'name': '系统使用率', 'type': 'line', 'data':[]}
-    all_usage_json = {'name': '整体使用率', 'type': 'line', 'data':[]}
+    all_usage_json = {'name': '闲置率', 'type': 'line', 'data':[]}
 
     for history in celery_history:
 
-        data['data']['xAxis'].append(str(time/60)+":"+str(time -(time/60)*60))
+        data['data']['xAxis'].append(str(time/60)+"点"+str(time -(time/60)*60)+"分")
         time-=5
         log = filter(None,history.log.split(' '))
         user_usage = str(log[0]).strip()
@@ -206,6 +206,7 @@ def get_cpu_statistics(request):
     data['data']['series'].append(sys_usage_json)
     data['data']['series'].append(all_usage_json)
 
+    data['data']['xAxis'] = data['data']['xAxis'][::-1]
     return render_json(data)
 
 
