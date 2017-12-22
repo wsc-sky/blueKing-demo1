@@ -79,19 +79,18 @@
     }
     $(function(){
         initEStandLineChart({
-            url: '/get_cpu_statistics/?ip=10.0.1.109',
+            url: site_url+'get_cpu_statistics/?ip=10.0.1.109',
             dataType: 'json',
             containerId: 'chart1_demo'
         });
-        console.log(111)
         initEStandLineChart({
-            url: '/get_cpu_statistics/?ip=10.0.1.220',
+            url: site_url+'get_cpu_statistics/?ip=10.0.1.220',
             dataType: 'json',
             containerId: 'chart2_demo'
         });
 
         initEStandLineChart({
-            url: '/get_cpu_statistics/?ip=10.0.1.188',
+            url: site_url+'get_cpu_statistics/?ip=10.0.1.188',
             dataType: 'json',
             containerId: 'chart3_demo'
         });
