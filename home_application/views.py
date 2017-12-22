@@ -184,7 +184,7 @@ def get_cpu_statistics(request):
     data['data'] = {}
     data['data']['xAxis'] = []
     data['data']['series'] = []
-    time = celery_history[0].created_date.minute + celery_history[0].created_date.hour * 60
+    time = celery_history[9].created_date.minute + celery_history[0].created_date.hour * 60
 
     user_usage_json = {'name': '用户使用率', 'type': 'line', 'data':[]}
     sys_usage_json = {'name': '系统使用率', 'type': 'line', 'data':[]}
