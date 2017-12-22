@@ -132,21 +132,21 @@
 
   function execute_task(ip) {
     var task_data = $("#select_task").val().split('~')
+    if(task_data[0]===""){
+        alert('Please select a task!')
+        return
+    }
     var task_id = task_data[0]
     var task_name = task_data[1]
     var app_data = $("#business_select").val().split('~');
     var app_id = app_data[0]
     var app_name = app_data[1]
 
-    if(task_name===''){
-        alert('Please select a task!')
-    }
-
     var d = dialog({
             width: 440,
             title: "提示",
             content: '<div class="king-notice3 king-notice-success">' +
-            '        <img src="https://magicbox.bk.tencent.com/static_api/v3/components/loading1/images/loading_1_36x36.gif" all="loading" style="width: 50px;padding-bottom: 20px;">' +
+            '        <img src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/reload_36.gif" all="loading" style="width: 50px;padding-bottom: 20px;">' +
             '<div class="king-notice-text">' +
             '<p class="f24">执行中</p>' +
             '<p class="f12">' +
