@@ -2,9 +2,9 @@
 
 <%block name="content">
 
-    <img src="https://magicbox.bk.tencent.com/static_api/v3/components/loading3/svg/oval.svg" width="50" alt="" id="loading3_demo1">
 
   <div class="container">
+
     <br/>
 
     <div class="king-block king-block-bordered">
@@ -132,12 +132,28 @@
 
   function execute_task(ip) {
     var task_data = $("#select_task").val().split('~')
-    console.log(task_data)
     var task_id = task_data[0]
     var task_name = task_data[1]
     var app_data = $("#business_select").val().split('~');
     var app_id = app_data[0]
     var app_name = app_data[1]
+
+    if(task_name===''){
+        alert('Please select a task!')
+    }
+
+    var d = dialog({
+            width: 440,
+            title: "提示",
+            content: '<div class="king-notice3 king-notice-success">' +
+            '        <img src="https://magicbox.bk.tencent.com/static_api/v3/components/loading1/images/loading_1_36x36.gif" all="loading" style="width: 50px;padding-bottom: 20px;">' +
+            '<div class="king-notice-text">' +
+            '<p class="f24">执行中</p>' +
+            '<p class="f12">' +
+            '</div>' +
+            '</div>',
+          });
+    d.show();
     $.ajax({
       url: site_url+'execute_task/',
       type: 'POST',
@@ -157,9 +173,8 @@
             '</div>' +
             '</div>',
           });
-          d.show();
           setTimeout(function () {
-            window.location.href = "/history/"
+            window.location.href = site_url+"history/"
           }, 2000)
         } else {
 

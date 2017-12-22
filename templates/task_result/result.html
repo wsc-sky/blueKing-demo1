@@ -102,7 +102,7 @@
     function check_log(job_id) {
 
         $.ajax({
-            url: '/get_task_log/' + job_id.toString() + '/',
+            url: site_url+'get_task_log/' + job_id.toString() + '/',
             type: 'GET',
             success: function (data) {
                 $('.container').css({})
@@ -152,26 +152,7 @@
         })
 
     }
-{#    function select_user() {#}
-{#        var selected_business = $("#business_select").val();#}
-{#        $.ajax({#}
-{#            url: '/get_host_by_app/' + selected_business + '/',#}
-{#            type: 'GET',#}
-{#            success: function (data) {#}
-{#            }#}
-{#        })#}
-{##}
-{#    function select_job() {#}
-{#        var selected_business = $("#business_select").val();#}
-{#        $.ajax({#}
-{#            url: '/get_host_by_app/' + selected_business + '/',#}
-{#            type: 'GET',#}
-{#            success: function (data) {#}
-{#            }#}
-{#        })#}
-{##}
-{##}
-{#    }#}
+
 
 
 </script>
