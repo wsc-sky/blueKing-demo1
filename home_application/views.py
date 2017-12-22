@@ -89,6 +89,10 @@ def execute_task(request):
         logData = client.job.get_task_ip_log({'task_instance_id': task_instance_id})['data'][0]['stepAnalyseResult'][0]['ipLogContent'][0]
         totalTime = logData['totalTime']
         log = logData['logContent']
+        len_of_log = len(log)
+
+        if len_of_log>1999:
+            log = log[len_of_log-1999:len_of_log]
         history = History.objects.create(
             task_id=task_id,
             task_name = task_name,

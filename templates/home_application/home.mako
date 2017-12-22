@@ -161,7 +161,7 @@
       success: function (data) {
         result = data.execute_result.result
         if (result) {
-          var d = dialog({
+          d = dialog({
             width: 440,
             title: "提示",
             content: '<div class="king-notice3 king-notice-success">' +
@@ -178,7 +178,7 @@
           }, 2000)
         } else {
 
-          var d = dialog({
+          d = dialog({
             width: 440,
             title: "提示",
             content: '<div class="king-notice3 king-notice-fail">' +

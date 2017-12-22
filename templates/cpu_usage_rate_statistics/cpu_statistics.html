@@ -1,15 +1,14 @@
 <%inherit file="/base.html"/>
 
 <%block name="content">
-  <div class="container">
-
-<h3>IP 10.0.1.109</h3>
-<div id="chart1_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
-<h3>IP 10.0.1.220</h3>
-<div id="chart2_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
-<h3>IP 10.0.1.188</h3>
-<div id="chart3_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
-  </div>
+<div class="container">
+  <br/>
+  <div  data-ip="10.0.1.109" id="chart1_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+  <br/>
+  <div data-ip="10.0.1.220" id="chart2_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+  <br/>
+  <div data-ip="10.0.1.188" id="chart3_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+</div>
 </%block>
 
 <script src="https://magicbox.bkclouds.cc/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
@@ -18,59 +17,65 @@
 
 <script type="text/javascript">
 
-    function createEStandLineChart(conf){
+    function createEStandLineChart(conf) {
+
+        var ip = $('#'+conf.selector.toString()).data().ip
         var myChart = echarts.init(document.getElementById(conf.selector));
         var legendData = []
         var myDate = new Date();
 
-        for(var i=0; i < conf.data.series.length;i++){
+
+        for (var i = 0; i < conf.data.series.length; i++) {
             legendData.push(conf.data.series[i].name)
         }
+
         myChart.setOption({
-            title :{
-                text: myDate.toLocaleDateString()+ " CPU 使用率统计图"
+            title: {
+                text: myDate.toLocaleDateString() +" | 主机：" +ip+" | CPU 使用率统计图",
+                x: 'center',
             },
-            tooltip : {
+            tooltip: {
                 trigger: 'axis'
             },
             legend: {
                 y: 'bottom',
-                data:legendData
+                data: legendData
             },
             toolbox: {
-                show : true,
-                feature : {
-                    mark : {show: true},
-                    dataView : {show: true, readOnly: false},
-                    magicType : {show: true, type: ['bar','line']},
-                    restore : {show: true},
-                    saveAsImage : {show: true}
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['bar', 'line']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
                 }
             },
-            calculable : true,
-            xAxis : [
+            calculable: true,
+            xAxis: [
                 {
-                    type : 'category',
-                    data : conf.data.xAxis
+                    type: 'category',
+                    data: conf.data.xAxis
                 }
             ],
-            yAxis : [
+            yAxis: [
                 {
-                    type : 'value',
-                    splitArea : {show : true}
+                    type: 'value',
+                    splitArea: {show: true}
                 }
             ],
-            series : conf.data.series
+            series: conf.data.series
         });
-     }
-    function initEStandLineChart(conf){
+    }
+
+    function initEStandLineChart(conf) {
         $.ajax({
             url: conf.url,
             type: 'GET',
             dataType: conf.dataType,
-            success: function(res){
+            success: function (res) {
                 //获取数据成功
-                if (res.result){
+                if (res.result) {
                     createEStandLineChart({
                         selector: conf.containerId, // 图表容器
                         data: res.data, // 图表数据
@@ -79,22 +84,26 @@
             }
         })
     }
-    $(function(){
-        initEStandLineChart({
-            url: site_url+'get_cpu_statistics/?ip=10.0.1.109',
-            dataType: 'json',
-            containerId: 'chart1_demo'
-        });
-        initEStandLineChart({
-            url: site_url+'get_cpu_statistics/?ip=10.0.1.220',
-            dataType: 'json',
-            containerId: 'chart2_demo'
-        });
 
-        initEStandLineChart({
-            url: site_url+'get_cpu_statistics/?ip=10.0.1.188',
-            dataType: 'json',
-            containerId: 'chart3_demo'
-        });
+    $(function () {
+
+    initEStandLineChart({
+        url: site_url + 'get_cpu_statistics/?ip=10.0.1.109',
+        dataType: 'json',
+        containerId: 'chart1_demo'
     });
+    initEStandLineChart({
+        url: site_url + 'get_cpu_statistics/?ip=10.0.1.220',
+        dataType: 'json',
+        containerId: 'chart2_demo'
+    });
+
+    initEStandLineChart({
+        url: site_url + 'get_cpu_statistics/?ip=10.0.1.188',
+        dataType: 'json',
+        containerId: 'chart3_demo'
+    });
+
+    })
+    ;
 </script>
