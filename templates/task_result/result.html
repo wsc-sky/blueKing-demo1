@@ -13,7 +13,7 @@
       选择用户
 
       <select id="select_user" name="select_user" class="select2_box"  style="width: 200px">
-        <option value="all" class="selected_task" selected="true">所有</option>
+        <option value="all" id="selected_all_user" selected="true">所有</option>
         %for user in user_list:
         <option value=${user['username']} class="selected_job">${user['username']}</option>
         %endfor
@@ -22,7 +22,7 @@
       选择业务
 
       <select id="business_select" name="select_job" class="select2_box"  style="width: 200px">
-        <option value="all" class="selected_job" selected="true">所有</option>
+        <option value="all" id="selected_all_job" selected="true">所有</option>
 
         %for app in app_list:
         <option value=${app['ApplicationID']} class="selected_job">${app['ApplicationName']}</option>
@@ -33,13 +33,14 @@
       任务类型
 
       <select name="select_task" id="select_task" class="select2_box" style="width: 200px">
-        <option value="all" class="selected_task" selected="true">所有</option>
+        <option value="all" id="selected_all_task" selected="true">所有</option>
         %for task in task_list:
         <option value=${task['id']} class="selected_task">${task['name']}</option>
         %endfor
 
       </select>
       <button class="btn btn-success" onclick="filter_history()">过滤</button>
+      <button class="btn btn-warning" onclick="reset_filter()">重置</button>
     </div>
   </div>
   <div class="king-block king-block-bordered">
@@ -98,6 +99,11 @@
         $('#select_task').select2()
         $('#select_user').select2()
     })
+
+    function reset_filter(){
+        $("select").val('all')
+        $('select').select2()
+    }
 
     function check_log(job_id) {
 

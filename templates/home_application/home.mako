@@ -55,11 +55,11 @@
             %for host in host_list:
               <tr>
                 <th style="width: 15%;">${host['InnerIP']}</th>
-                <th style="width: 15%;">${host['OSName']}</th>
-                <th style="width: 15%;">${host['CompanyID']}</th>
-                <th style="width: 15%;">${host['Region']}</th>
-                <th style="width: 15%;">${host['Source']}</th>
-                <th style="width: 15%;">${host['DeviceClass']}</th>
+                <th style="width: 15%;">${host['HostName']}</th>
+                <th style="width: 15%;">${host['SetID']}</th>
+                <th style="width: 15%;">${host['SetName']}</th>
+                <th style="width: 15%;">${host['ModuleID']}</th>
+                <th style="width: 15%;">${host['ModuleName']}</th>
                 <th>
                   <button class="btn btn-primary" name="execute_task" value=${host['InnerIP']}
                       onclick="execute_task('${host['InnerIP']}')">
@@ -102,11 +102,11 @@
         for (var i = 0; i < hosts.length; i++) {
           var html0 =
               "<tr><th >" + hosts[i].InnerIP + "</th>" +
-              "<th >" + hosts[i].OSName + "</th>" +
-              "<th >" + hosts[i].CompanyID + "</th>" +
-              "<th >" + hosts[i].Region + "</th>" +
-              "<th >" + hosts[i].Source + "</th>" +
-              "<th >" + hosts[i].DeviceClass + "</th>" +
+              "<th >" + hosts[i].HostName + "</th>" +
+              "<th >" + hosts[i].SetID + "</th>" +
+              "<th >" + hosts[i].SetName + "</th>" +
+              "<th >" + hosts[i].ModuleID + "</th>" +
+              "<th >" + hosts[i].ModuleName + "</th>" +
               "<th><button class=\"btn btn-primary\" value=" + hosts[i].InnerIP + " onclick=\"execute_task('" + hosts[i].InnerIP + "')\" >执行任务</button></th></tr>"
           host_html += html0
         }
@@ -127,6 +127,8 @@
         $("#select_task").html(task_html)
       }
     })
+    $('#select_task').val('')
+    $('#select_task').select2()
 
   }
 
