@@ -15,7 +15,8 @@ See the License for the specific language governing permissions and limitations 
 # import from lib
 # ===============================================================================
 from django.contrib import admin
-# from models import History
-# #
-# admin.site.register(History)
+from models import History,CeleryLog
+#
+admin.site.register(History)
+admin.site.register(CeleryLog)
 # ===============================================================================
