@@ -224,49 +224,50 @@ def get_app_by_user(request):
 
 
 def test(request):
-    app_id = '3'
-    task_id = '2'
+    try:
+        app_id = '3'
+        task_id = '2'
 
-    data = {'app_id': app_id, 'task_id': task_id}
+        data = {'app_id': app_id, 'task_id': task_id}
 
-    client = get_client_by_user('admin')
+        client = get_client_by_user('admin')
 
-    stepId=0
-    for step in client.job.get_task_detail(data)['data']['nmStepBeanList']:
-        stepId=step['stepId']
+        stepId=0
+        for step in client.job.get_task_detail(data)['data']['nmStepBeanList']:
+            stepId=step['stepId']
 
-    steps = [
-        {
-        'ipList': '1:10.0.1.109,1:10.0.1.220,1:10.0.1.188',
-        'stepId': stepId,
-        "account": "root",
-        },
-    ]
-    data = {'app_id':app_id, 'task_id': task_id, 'steps': steps}
+        steps = [
+            {
+            'ipList': '1:10.0.1.109,1:10.0.1.220,1:10.0.1.188',
+            'stepId': stepId,
+            "account": "root",
+            },
+        ]
+        data = {'app_id':app_id, 'task_id': task_id, 'steps': steps}
 
-    execute_result = client.job.execute_task(data)
-    task_instance_id = execute_result['data']['taskInstanceId']
+        execute_result = client.job.execute_task(data)
+        task_instance_id = execute_result['data']['taskInstanceId']
 
-    if execute_result['result']:
+        if execute_result['result']:
 
-        is_finished = client.job.get_task_result({'task_instance_id':task_instance_id})['data']['isFinished']
-        while not is_finished:
-            time.sleep(0.1)
-            is_finished = client.job.get_task_result({'task_instance_id': task_instance_id})['data']['isFinished']
+            is_finished = client.job.get_task_result({'task_instance_id':task_instance_id})['data']['isFinished']
+            while not is_finished:
+                time.sleep(0.1)
+                is_finished = client.job.get_task_result({'task_instance_id': task_instance_id})['data']['isFinished']
 
-    log_contents =  client.job.get_task_ip_log({'task_instance_id': task_instance_id})['data'][0]['stepAnalyseResult'][0]['ipLogContent']
+        log_contents =  client.job.get_task_ip_log({'task_instance_id': task_instance_id})['data'][0]['stepAnalyseResult'][0]['ipLogContent']
 
-    for log_content in log_contents:
-        ip = log_content['ip']
-        log = log_content['logContent'].split('all')[1].split('\n')[0]
+        for log_content in log_contents:
+            ip = log_content['ip']
+            log = log_content['logContent'].split('all')[1].split('\n')[0]
 
-        celery_log  = CeleryLog.objects.create(
-            ip = ip,
-            app_id = app_id,
-            task_id = task_id,
-            log = log,
-        )
-
-    print execute_result
+            celery_log  = CeleryLog.objects.create(
+                ip = ip,
+                app_id = app_id,
+                task_id = task_id,
+                log = log,
+            )
+    except:
+        return render_json('Failed')
 
     return render_json('success')

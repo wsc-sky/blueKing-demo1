@@ -45,10 +45,6 @@ class History(models.Model):
 
 
 
-    def __unicode__(self):
-        return self.job_id
-
-
 class Log(models.Model):
     job_id = models.IntegerField()
     content = models.CharField(max_length=2000)
@@ -56,8 +52,8 @@ class Log(models.Model):
     class Meta:
         db_table = 'task_log_tab'
 
-    def __unicode__(self):
-        return u'{}'.format(self.content[0:50]) or ''
+    # def __unicode__(self):
+    #     return u'{}'.format(self.content[0:50]) or ''
 
 
 class CeleryLog(models.Model):
