@@ -24,7 +24,7 @@
         任务类型
 
         <select name="select_task" id="select_task" class="select2_box" style="width: 200px">
-          <option value=""  selected="true">
+          <option value="" class="selected_task" selected="true">
           %for task in task_list:
             <option id="" value=${str(task['id'])+'~'+task['name']} class="selected_task">${task['name']}</option>
           %endfor
