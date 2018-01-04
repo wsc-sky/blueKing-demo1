@@ -19,12 +19,13 @@ def home(request):
     user = request.user.username
 
     client = get_client_by_request(request)
+    a = client.cc.get_app_by_user()
     app_list = client.cc.get_app_by_user()['data']
 
-    data = {'app_id': '3'}
+    data = {'app_id': '12'}
     task_list = [] if client.job.get_task(data)['data'] == None else client.job.get_task(data)['data']
 
-    host_list = client.cc.get_app_host_list({'app_id': '3'})['data']
+    host_list = client.cc.get_app_host_list({'app_id': '12'})['data']
 
     return render_mako_context(request, '/home_application/home.mako',
                                {'app_list': app_list, 'task_list': task_list, 'host_list': host_list})
@@ -193,12 +194,12 @@ def get_cpu_statistics(request):
     data['data']['series'] = []
     time = celery_history[9].created_date.minute + celery_history[0].created_date.hour * 60
 
-    user_usage_json = {'name': '用户使用率', 'type': 'line', 'data': []}
-    sys_usage_json = {'name': '系统使用率', 'type': 'line', 'data': []}
-    all_usage_json = {'name': '闲置率', 'type': 'line', 'data': []}
+    user_usage_json = {'name': 'User Usage', 'type': 'line', 'data': []}
+    sys_usage_json = {'name': 'System Usage', 'type': 'line', 'data': []}
+    all_usage_json = {'name': 'Idle', 'type': 'line', 'data': []}
 
     for history in celery_history:
-        data['data']['xAxis'].append(str(time / 60) + "点" + str(time - (time / 60) * 60) + "分")
+        data['data']['xAxis'].append(str(time / 60) + ":" + str(time - (time / 60) * 60))
         time -= 5
         log = filter(None, history.log.split(' '))
         user_usage = str(log[0]).strip()
@@ -230,52 +231,10 @@ def get_app_by_user(request):
 
 
 def test(request):
-    try:
-        app_id = '3'
-        task_id = '2'
+    user = request.user.username
 
-        data = {'app_id': app_id, 'task_id': task_id}
+    client = get_client_by_request(request)
 
-        client = get_client_by_request(request)
+    result = client.external_api.api_test()
 
-        stepId = 0
-        for step in client.job.get_task_detail(data)['data']['nmStepBeanList']:
-            stepId = step['stepId']
-
-        steps = [
-            {
-                'ipList': '1:10.0.1.109,1:10.0.1.220,1:10.0.1.188',
-                'stepId': stepId,
-                "account": "root",
-            },
-        ]
-        data = {'app_id': app_id, 'task_id': task_id, 'steps': steps}
-
-        execute_result = client.job.execute_task(data)
-        task_instance_id = execute_result['data']['taskInstanceId']
-
-        if execute_result['result']:
-
-            is_finished = client.job.get_task_result({'task_instance_id': task_instance_id})['data']['isFinished']
-            while not is_finished:
-                time.sleep(0.1)
-                is_finished = client.job.get_task_result({'task_instance_id': task_instance_id})['data']['isFinished']
-
-        log_contents = \
-        client.job.get_task_ip_log({'task_instance_id': task_instance_id})['data'][0]['stepAnalyseResult'][0][
-            'ipLogContent']
-
-        for log_content in log_contents:
-            ip = log_content['ip']
-            log = log_content['logContent'].split('all')[1].split('\n')[0]
-
-            celery_log = CeleryLog.objects.create(
-                ip=ip,
-                app_id=app_id,
-                task_id=task_id,
-                log=log,
-            )
-    except:
-        return render_json('Failed')
-
-    return render_json('success')
+    return render_json({'success':result})

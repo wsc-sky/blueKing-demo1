@@ -10,7 +10,7 @@
     </div>
     <div class="king-block-content">
 
-      Select user
+      Select User
 
       <select id="select_user" name="select_user" class="select2_box"  style="width: 200px">
         <option value="all" id="selected_all_user" selected="true">All</option>
@@ -19,7 +19,7 @@
         %endfor
       </select>
 
-      Select job
+      Select Business
 
       <select id="business_select" name="select_job" class="select2_box"  style="width: 200px">
         <option value="all" id="selected_all_job" selected="true">All</option>
@@ -30,7 +30,7 @@
       </select>
 
 
-      Select task
+      Select Job
 
       <select name="select_task" id="select_task" class="select2_box" style="width: 200px">
         <option value="all" id="selected_all_task" selected="true">All</option>
@@ -116,9 +116,11 @@
                     width: 800,
                     quickClose:true,
                     title: "Execution Log",
-                    content: '<div style="white-space: \pre-wrap">' + data.log + '</div>',
+                    content: '<div style="max-height:500px; overflow:auto"><div style="white-space: \pre-wrap">' + data.log + '</div></div>',
                 });
                 d.show();
+                d.showModal();
+
             }
 
         })

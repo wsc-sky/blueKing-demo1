@@ -31,7 +31,6 @@ urlpatterns = patterns(
     (r'^get_cpu_statistics/$', 'get_cpu_statistics'),
 
     ####  method test #####
-
     (r'^test/$', 'test'),
 
 )

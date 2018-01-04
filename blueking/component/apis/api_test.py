@@ -10,7 +10,7 @@ class CollectionsAPITEST(object):
 
         # create_task为组件名，method为请求组件使用的方法，path为组件路径，组件域名为系统默认域名
         self.api_test = ComponentAPI(
-            client=self.client, method='GET', path='/api/c/self-service-api/sicong_system/api_test/',
+            client=self.client, method='GET', path='/api/c/self-service-api/external_api/call_gims_test/',
             description=u'',
         )
 

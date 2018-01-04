@@ -12,7 +12,7 @@
         <h3 class="king-block-title">Options</h3>
       </div>
       <div class="king-block-content">
-        Select Job
+        Select Business
 
         <select id="business_select" name="select_job" class="select2_box" onchange="select_job()" style="width: 200px">
           %for app in app_list:
@@ -22,7 +22,7 @@
           %endfor
         </select>
 
-        Select task
+        Select Job
 
         <select name="select_task" id="select_task" class="select2_box" style="width: 200px">
           <option value="" class="selected_task" selected="true">
@@ -156,6 +156,7 @@
             '</div>',
           });
     d.show();
+    d.showModal();
     $.ajax({
       url: site_url+'execute_task/',
       type: 'POST',
@@ -171,7 +172,7 @@
             '<div class="king-notice-text">' +
             '<p class="f24">Execute successfully</p>' +
             '<p class="f12">' +
-            '<span class="king-notice3-color">2秒</span>Will jump to history page</p>' +
+            'Will jump to history page in <span class="king-notice3-color">2s</span></p>' +
             '</div>' +
             '</div>',
           });
@@ -194,6 +195,7 @@
             '</div>',
           });
           d.show();
+          d.showModal();
         }
       }
     })
