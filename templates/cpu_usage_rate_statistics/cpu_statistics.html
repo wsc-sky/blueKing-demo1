@@ -3,11 +3,10 @@
 <%block name="content">
 <div class="container">
   <br/>
-  <div  data-ip="10.0.1.109" id="chart1_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+  <div  data-ip="10.65.8.154" id="chart1_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
   <br/>
-  <div data-ip="10.0.1.220" id="chart2_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+  <div data-ip="10.65.8.160" id="chart2_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
   <br/>
-  <div data-ip="10.0.1.188" id="chart3_demo" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
 </div>
 </%block>
 
@@ -88,20 +87,14 @@
     $(function () {
 
     initEStandLineChart({
-        url: site_url + 'get_cpu_statistics/?ip=10.0.1.109',
+        url: site_url + 'get_cpu_statistics/?ip=10.65.8.154',
         dataType: 'json',
         containerId: 'chart1_demo'
     });
     initEStandLineChart({
-        url: site_url + 'get_cpu_statistics/?ip=10.0.1.220',
+        url: site_url + 'get_cpu_statistics/?ip=10.65.8.160',
         dataType: 'json',
         containerId: 'chart2_demo'
-    });
-
-    initEStandLineChart({
-        url: site_url + 'get_cpu_statistics/?ip=10.0.1.188',
-        dataType: 'json',
-        containerId: 'chart3_demo'
     });
 
     })

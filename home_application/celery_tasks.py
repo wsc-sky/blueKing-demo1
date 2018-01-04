@@ -65,7 +65,7 @@ def get_time():
 def cpu_statistics():
     try:
         app_id = '12'
-        task_id = '4'
+        task_id = '6'
 
         data = {'app_id': app_id, 'task_id': task_id}
 
@@ -106,7 +106,8 @@ def cpu_statistics():
                 task_id = task_id,
                 log = log,
             )
-    except:
+    except Exception as e:
+        print str(e)
         return False
 
     return True

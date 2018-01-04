@@ -231,13 +231,54 @@ def get_app_by_user(request):
 
 
 def test(request):
-    user = request.user.username
+    try:
+        app_id = '12'
+        task_id = '6'
 
-    client = get_client_by_request(request)
+        data = {'app_id': app_id, 'task_id': task_id}
 
-    result = client.external_api.api_test()
+        client = get_client_by_user('weisc')
 
-    return render_json({'success':result})
+        stepId=0
+        for step in client.job.get_task_detail(data)['data']['nmStepBeanList']:
+            stepId=step['stepId']
+
+        steps = [
+            {
+            'ipList': '1:10.65.8.154,1:10.65.8.160',
+            'stepId': stepId,
+            "account": "root",
+            },
+        ]
+        data = {'app_id':app_id, 'task_id': task_id, 'steps': steps}
+
+        execute_result = client.job.execute_task(data)
+        task_instance_id = execute_result['data']['taskInstanceId']
+
+        if execute_result['result']:
+
+            is_finished = client.job.get_task_result({'task_instance_id':task_instance_id})['data']['isFinished']
+            while not is_finished:
+                time.sleep(0.1)
+                is_finished = client.job.get_task_result({'task_instance_id': task_instance_id})['data']['isFinished']
+
+        log_contents =  client.job.get_task_ip_log({'task_instance_id': task_instance_id})['data'][0]['stepAnalyseResult'][0]['ipLogContent']
+
+        for log_content in log_contents:
+            ip = log_content['ip']
+            log = log_content['logContent'].split('all')[1].split('\n')[0]
+
+            celery_log  = CeleryLog.objects.create(
+                ip = ip,
+                app_id = app_id,
+                task_id = task_id,
+                log = log,
+            )
+    except Exception as e:
+        print str(e)
+        return render_json(str(e))
+
+    return render_json('yes')
 
 def admin_page(request):
     return render_mako_context(request, '/admin/admin_page.html')
