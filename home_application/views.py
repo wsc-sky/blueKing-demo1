@@ -18,11 +18,11 @@ import time
 def home(request):
     user = request.user.username
 
-    client = get_client_by_user(user)
+    client = get_client_by_request(request)
     app_list = client.cc.get_app_by_user()['data']
 
     data = {'app_id': '3'}
-    task_list = client.job.get_task(data)['data']
+    task_list = [] if client.job.get_task(data)['data'] == None else client.job.get_task(data)['data']
 
     host_list = client.cc.get_app_host_list({'app_id': '3'})['data']
 
@@ -33,7 +33,7 @@ def home(request):
 def get_task_by_app(request, app_id=None):
     user = request.user.username
     data = {'app_id': app_id}
-    client = get_client_by_user(user)
+    client = get_client_by_request(request)
     task_list = client.job.get_task(data)['data']
 
     return render_json({'task_list': task_list})
@@ -42,7 +42,7 @@ def get_task_by_app(request, app_id=None):
 def get_host_by_app(request, app_id=None):
     user = request.user.username
     data = {'app_id': app_id}
-    client = get_client_by_user(user)
+    client = get_client_by_request(request)
     host_list = client.cc.get_app_host_list(data)['data']
 
     return render_json({'host_list': host_list})
@@ -62,7 +62,7 @@ def execute_task(request):
 
     data = {'app_id': app_id, 'task_id': task_id}
 
-    client = get_client_by_user(user)
+    client = get_client_by_request(request)
 
     stepId = 0
     for step in client.job.get_task_detail(data)['data']['nmStepBeanList']:
@@ -156,15 +156,15 @@ def contactus(request):
 def result_page(request):
     user = request.user.username
 
-    clientAdmin = get_client_by_user('admin')
+    clientAdmin = get_client_by_request(request)
 
     user_list = clientAdmin.bk_login.get_all_user()['data']
 
-    client = get_client_by_user(user)
+    client = get_client_by_request(request)
     app_list = client.cc.get_app_by_user()['data']
 
     data = {'app_id': '3'}
-    task_list = client.job.get_task(data)['data']
+    task_list = [] if client.job.get_task(data)['data'] == None else client.job.get_task(data)['data']
 
     history_data = History.objects.all().order_by('-created_date')
 
@@ -219,7 +219,7 @@ def get_cpu_statistics(request):
 def get_app_by_user(request):
     user = request.user.username
 
-    client = get_client_by_user(user)
+    client = get_client_by_request(request)
 
     app_list = client.cc.get_app_by_user()['data']
 
@@ -236,7 +236,7 @@ def test(request):
 
         data = {'app_id': app_id, 'task_id': task_id}
 
-        client = get_client_by_user('admin')
+        client = get_client_by_request(request)
 
         stepId = 0
         for step in client.job.get_task_detail(data)['data']['nmStepBeanList']:

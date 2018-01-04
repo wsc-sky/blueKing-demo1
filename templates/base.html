@@ -3,7 +3,7 @@
   <head>
     <%block name='head'>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>蓝鲸智云开发DEMO</title>
+        <title>BlueKing Development DEMO</title>
         <meta name="description" content=""/>
         <meta name="author" content=""/>
         <link rel="shortcut icon" href="${STATIC_URL}favicon.ico" type="image/x-icon">
@@ -35,8 +35,8 @@
         <div class="container" style="width: 100%;">
             <div class="navbar-header col-md-4 col-sm-4 col-xs-4 logo">
                 <a class="navbar-brand" href="${SITE_URL}">
-                  <span><img src="${STATIC_URL}sea.png" width="80" class="logo" style="margin-top: -5px"></span>
-                    <span style="margin-left:6px; ">蓝鲸DEMO</span>
+                  <span><img src="${STATIC_URL}sea.png" width="80" class="logo" style="margin-top: -5px;margin-left:-20px"></span>
+                    <span style="margin-left:6px; ">BlueKing DEMO</span>
                 </a>
             </div>
             <div class="collapse navbar-collapse navbar-responsive-collapse">
@@ -51,10 +51,10 @@
                     elif relative_path.startswith(SITE_URL + "contactus/"):
                       contactus = 'king-navbar-active'
                   %>
-                  <li class="${home}"><a href="${SITE_URL}"><span>任务执行</span></a></li>
-                  <li class="${dev_guide}"><a href="${SITE_URL}history/"><span>执行记录</span></a></li>
-                  <li class="${contactus}"><a href="${SITE_URL}cpu_chart/"><span>CPU使用率统计</span></a></li>
-                  <li class="${contactus}"><a href="${SITE_URL}admin/"><span>数据管理</span></a></li>
+                  <li class="${home}"><a href="${SITE_URL}"><span>Task Execution</span></a></li>
+                  <li class="${dev_guide}"><a href="${SITE_URL}history/"><span>History</span></a></li>
+                  <li class="${contactus}"><a href="${SITE_URL}cpu_chart/"><span>CPU Usage</span></a></li>
+                  <li class="${contactus}"><a href="${SITE_URL}admin/"><span>Django admin</span></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <a href="###" class="avatar">
@@ -65,7 +65,7 @@
                     <span>${request.user.username}</span>
                   </a>
                   <!--退出登录-->
-                  <a id="logout" href="${LOGOUT_URL}">注销</a>
+                  <a id="logout" href="${LOGOUT_URL}">Logout</a>
                 </ul>
             </div>
         </div>
@@ -79,13 +79,13 @@
         <%block name='footerline'></%block>
         <ul class="links ft">
             <li>
-                <a id="contact_us" class="link">QQ咨询(800802001)</a>
-                | <a href="http://bbs.bk.tencent.com/forum.php" target="_blank" hotrep="hp.footer.feedback" class="link">蓝鲸论坛</a>
-                | <a href="http://bk.tencent.com/" target="_blank" hotrep="hp.footer.feedback" class="link">蓝鲸官网</a>
-                | <a href="${BK_PLAT_HOST}" target="_blank" hotrep="hp.footer.feedback" class="link">蓝鲸智云工作台</a>
+                <a id="contact_us" class="link">QQ consult(800802001)</a>
+                | <a href="http://bbs.bk.tencent.com/forum.php" target="_blank" hotrep="hp.footer.feedback" class="link">BlueKing chinese forum</a>
+                | <a href="http://bk.tencent.com/" target="_blank" hotrep="hp.footer.feedback" class="link">BlueKing official website</a>
+                | <a href="${BK_PLAT_HOST}" target="_blank" hotrep="hp.footer.feedback" class="link">BlueKing Job platform</a>
             </li>
             <li><p class="copyright">Copyright © 2012-${NOW.year} Tencent BlueKing. All Rights Reserved.</p> </li>
-          <li><p class="copyright">蓝鲸智云 版权所有</p> </li>
+          <li><p class="copyright">BlueKing all right reserved</p> </li>
         </ul>
       </div>
       <!-- 尾部声明 start -->

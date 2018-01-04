@@ -9,10 +9,10 @@
 
     <div class="king-block king-block-bordered">
       <div class="king-block-header king-gray-light">
-        <h3 class="king-block-title">填写个人信息</h3>
+        <h3 class="king-block-title">Options</h3>
       </div>
       <div class="king-block-content">
-        选择业务
+        Select Job
 
         <select id="business_select" name="select_job" class="select2_box" onchange="select_job()" style="width: 200px">
           %for app in app_list:
@@ -22,7 +22,7 @@
           %endfor
         </select>
 
-        任务类型
+        Select task
 
         <select name="select_task" id="select_task" class="select2_box" style="width: 200px">
           <option value="" class="selected_task" selected="true">
@@ -35,7 +35,7 @@
     </div>
     <div class="king-block king-block-bordered">
       <div class="king-block-header king-gray-light">
-        <h3 class="king-block-title">填写个人信息</h3>
+        <h3 class="king-block-title">Server information</h3>
       </div>
 
       <div class="king-block-content">
@@ -43,12 +43,12 @@
           <thead>
           <tr>
             <th>IP</th>
-            <th>机器名</th>
-            <th>大区 ID</th>
-            <th>大区名</th>
-            <th>模块 ID</th>
-            <th>模块名</th>
-            <th>操作</th>
+            <th>name</th>
+            <th>region ID</th>
+            <th>region name</th>
+            <th>module ID</th>
+            <th>module name</th>
+            <th>operation</th>
           </tr>
           </thead>
           <tbody id="tr_data">
@@ -63,7 +63,7 @@
                 <th>
                   <button class="btn btn-primary" name="execute_task" value=${host['InnerIP']}
                       onclick="execute_task('${host['InnerIP']}')">
-                    执行任务
+                    Execute task
                   </button>
                 </th>
               </tr>
@@ -146,11 +146,11 @@
 
     var d = dialog({
             width: 440,
-            title: "提示",
+            title: "Info",
             content: '<div class="king-notice3 king-notice-success">' +
             '        <img src="https://magicbox.bk.tencent.com/static_api/v3/components/loading2/gif/reload_36.gif" all="loading" style="width: 50px;padding-bottom: 20px;">' +
             '<div class="king-notice-text">' +
-            '<p class="f24">执行中</p>' +
+            '<p class="f24">Executing...</p>' +
             '<p class="f12">' +
             '</div>' +
             '</div>',
@@ -165,13 +165,13 @@
         if (result) {
           d = dialog({
             width: 440,
-            title: "提示",
+            title: "Info",
             content: '<div class="king-notice3 king-notice-success">' +
             '<span class="king-notice-img"></span>' +
             '<div class="king-notice-text">' +
-            '<p class="f24">执行成功</p>' +
+            '<p class="f24">Execute successfully</p>' +
             '<p class="f12">' +
-            '<span class="king-notice3-color">2秒</span>后跳转至执行历史页面</p>' +
+            '<span class="king-notice3-color">2秒</span>Will jump to history page</p>' +
             '</div>' +
             '</div>',
           });
@@ -182,13 +182,13 @@
 
           d = dialog({
             width: 440,
-            title: "提示",
+            title: "Info",
             content: '<div class="king-notice3 king-notice-fail">' +
             '<span class="king-notice-img"></span>' +
             '<div class="king-notice-text">' +
-            '<p class="f24">创建失败</p>' +
+            '<p class="f24">Execute failed</p>' +
             '<p class="f12">' +
-            '<span class="king-notice3-color">错误</spa>' + result['message'] +
+            '<span class="king-notice3-color">Failed</spa>' + result['message'] +
             '</p>' +
             '</div>' +
             '</div>',

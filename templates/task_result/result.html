@@ -6,23 +6,23 @@
 
   <div class="king-block king-block-bordered">
     <div class="king-block-header king-gray-light">
-      <h3 class="king-block-title">填写个人信息</h3>
+      <h3 class="king-block-title">Options</h3>
     </div>
     <div class="king-block-content">
 
-      选择用户
+      Select user
 
       <select id="select_user" name="select_user" class="select2_box"  style="width: 200px">
-        <option value="all" id="selected_all_user" selected="true">所有</option>
+        <option value="all" id="selected_all_user" selected="true">All</option>
         %for user in user_list:
         <option value=${user['username']} class="selected_job">${user['username']}</option>
         %endfor
       </select>
 
-      选择业务
+      Select job
 
       <select id="business_select" name="select_job" class="select2_box"  style="width: 200px">
-        <option value="all" id="selected_all_job" selected="true">所有</option>
+        <option value="all" id="selected_all_job" selected="true">All</option>
 
         %for app in app_list:
         <option value=${app['ApplicationID']} class="selected_job">${app['ApplicationName']}</option>
@@ -30,35 +30,35 @@
       </select>
 
 
-      任务类型
+      Select task
 
       <select name="select_task" id="select_task" class="select2_box" style="width: 200px">
-        <option value="all" id="selected_all_task" selected="true">所有</option>
+        <option value="all" id="selected_all_task" selected="true">All</option>
         %for task in task_list:
         <option value=${task['id']} class="selected_task">${task['name']}</option>
         %endfor
 
       </select>
-      <button class="btn btn-success" onclick="filter_history()">过滤</button>
-      <button class="btn btn-warning" onclick="reset_filter()">重置</button>
+      <button class="btn btn-success" onclick="filter_history()">Filter</button>
+      <button class="btn btn-warning" onclick="reset_filter()">Reset</button>
     </div>
   </div>
   <div class="king-block king-block-bordered">
     <div class="king-block-header king-gray-light">
-      <h3 class="king-block-title">填写个人信息</h3>
+      <h3 class="king-block-title">History</h3>
     </div>
 
     <div class="king-block-content">
       <table class="table table-bordered table7_demo">
         <thead>
         <tr>
-          <th>业务名称</th>
-          <th>任务名称</th>
-          <th>执行用户</th>
-          <th>开始时间</th>
-          <th>耗时</th>
+          <th>Job name</th>
+          <th>Task name</th>
+          <th>User</th>
+          <th>Start time</th>
+          <th>Duration</th>
           <th>IP</th>
-          <th>操作</th>
+          <th>Operaion</th>
         </tr>
         </thead>
         <tbody id="tr_data">
@@ -74,7 +74,7 @@
           <th>
             <button class="btn btn-primary" id="check_log"
                     onclick="check_log('${history['job_id']}')">
-              查看执行Log
+              Check Log
             </button>
           </th>
         </tr>
@@ -115,7 +115,7 @@
                 var d = dialog({
                     width: 800,
                     quickClose:true,
-                    title: "执行Log",
+                    title: "Execution Log",
                     content: '<div style="white-space: \pre-wrap">' + data.log + '</div>',
                 });
                 d.show();
@@ -147,7 +147,7 @@
                         "<th>" + history[i].ip + "</th>" +
                         "<th ><button class=\"btn btn-primary\" id=\"check_log\"" +
                         "     onclick=\"check_log('" + history[i].job_id + "')\">" +
-                        "     查看执行Log" +
+                        "     Check Log" +
                         "     </button>" +
                         "</th>"
                     history_html += html
