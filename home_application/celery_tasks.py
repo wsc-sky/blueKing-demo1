@@ -64,12 +64,12 @@ def get_time():
 
 def cpu_statistics():
     try:
-        app_id = '3'
-        task_id = '2'
+        app_id = '12'
+        task_id = '4'
 
         data = {'app_id': app_id, 'task_id': task_id}
 
-        client = get_client_by_user('admin')
+        client = get_client_by_user('weisc')
 
         stepId=0
         for step in client.job.get_task_detail(data)['data']['nmStepBeanList']:
@@ -77,7 +77,7 @@ def cpu_statistics():
 
         steps = [
             {
-            'ipList': '1:10.0.1.109,1:10.0.1.220,1:10.0.1.188',
+            'ipList': '1:10.65.8.154,1:10.65.8.160',
             'stepId': stepId,
             "account": "root",
             },
