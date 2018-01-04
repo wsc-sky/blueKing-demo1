@@ -20,6 +20,7 @@ urlpatterns = patterns(
     (r'^contactus/$', 'contactus'),
     (r'^history/$', 'result_page'),
     (r'^cpu_chart/$', 'cpu_statistics_page'),
+    (r'^admin-page/$', 'admin_page'),
 
     ##### API method ######
     (r'^get_task_by_app/(?P<app_id>\w+)/$', 'get_task_by_app'),

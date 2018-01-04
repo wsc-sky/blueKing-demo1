@@ -238,3 +238,6 @@ def test(request):
     result = client.external_api.api_test()
 
     return render_json({'success':result})
+
+def admin_page(request):
+    return render_mako_context(request, '/admin/admin_page.html')
